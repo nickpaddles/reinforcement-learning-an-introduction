@@ -284,7 +284,7 @@ class HumanPlayer:
         return i, j, self.symbol
 
 
-def train(epochs, print_every_n=500):
+def train_auto(epochs, print_every_n=500):
     player1 = Player(epsilon=0.01)
     player2 = Player(epsilon=0.01)
     judger = Judger(player1, player2)
@@ -303,6 +303,22 @@ def train(epochs, print_every_n=500):
         judger.reset()
     player1.save_policy()
     player2.save_policy()
+    
+    
+def train_interactive(epochs, print_every_n=1):
+    while True:
+        player1 = HumanPlayer()
+        player2 = Player(epsilon=0)
+        judger = Judger(player1, player2)
+        player2.load_policy()
+        winner = judger.play()
+        if winner == player2.symbol:
+            print("You lose!")
+            player2.save_policy()
+        elif winner == player1.symbol:
+            print("You win!")
+        else:
+            print("It is a tie!")
 
 
 def compete(turns):
@@ -338,9 +354,10 @@ def play():
             print("You win!")
         else:
             print("It is a tie!")
+            
 
 
 if __name__ == '__main__':
-    train(int(1e5))
+    train_interactive(int(1e1))
     compete(int(1e3))
     play()
