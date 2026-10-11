@@ -359,5 +359,5 @@ def play():
 
 if __name__ == '__main__':
     train_interactive(int(1e1))
-    compete(int(1e3))
-    play()
+    #compete(int(1e3))
+    #play()
